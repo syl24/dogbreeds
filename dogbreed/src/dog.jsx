@@ -16,13 +16,13 @@ const Container = styled.div`
 `;
 
 
-export default class Task extends React.Component{
+export default class Dog extends React.Component{
     render(){
 
         const isDragDisabled = false;
 
         return (
-            <Draggable draggableId={this.props.task.id} index={this.props.index} isDragDisabled={isDragDisabled}>
+            <Draggable draggableId={this.props.dog.id} index={this.props.index} isDragDisabled={isDragDisabled}>
                 {(provided, snapshot) => (
                     <Container 
                     {...provided.draggableProps}
@@ -30,8 +30,8 @@ export default class Task extends React.Component{
                     ref={provided.innerRef}
                     isDragging={snapshot.isDragging}
                     isDragDisabled={isDragDisabled}>
-                        {this.props.index+1}
-                        {this.props.task.content}
+                        {this.props.index+1} 
+                        {this.props.dog.content}
                         
                     </Container>
 
@@ -39,6 +39,7 @@ export default class Task extends React.Component{
                 
 
             </Draggable>
+            
         )
     }
 }

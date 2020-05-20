@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import Task from './task'
+import Dog from './dog'
 
 const Container = styled.div`
     margin: 8px;
-    border: 1px solid lightgrey;
-    background-color: white;
+    font-family: 'Roboto';
+    background-color: rgb(250, 255, 255, 0.625);
     border-radius: 2px;
     width: 220px;
     text-align: center;
@@ -22,7 +22,7 @@ const Title = styled.h3`
     
 `;
 
-const TaskList = styled.div`
+const DogList = styled.div`
     padding: 8px;
     transition: background-color 1s ease;
     background-color: ${props => (props.isDraggingOver ? 'cornflowerblue' : 'inherit')};
@@ -35,15 +35,15 @@ const TaskList = styled.div`
 
 class InnerList extends React.Component {
     shouldComponentUpdate(nextProps) {
-        if(nextProps.tasks === this.props.tasks) {
+        if(nextProps.dogs === this.props.dogs) {
             return false;
         }
             return true;
     }
 
     render(){
-        return this.props.tasks.map((task, index) => 
-                        (<Task key={task.id} task={task} index={index}/> ))
+        return this.props.dogs.map((dog, index) => 
+                        (<Dog key={dog.id} dog={dog} index={index}/> ))
     }
 }
 
@@ -61,21 +61,21 @@ export default class Column extends React.Component{
 
                         <Droppable 
                         droppableId = {this.props.column.id}
-                        type="task"
+                        type="dog"
                         // type= {this.props.column.id === 'column-3' ? 'done' : 'active'}
                         // isDropDisabled = {this.props.isDropDisabled}
                         >
                             {(provided, snapshot) => (
-                                <TaskList
+                                <DogList
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
                                     isDraggingOver={snapshot.isDraggingOver}
                                 > 
-                                <InnerList tasks={this.props.tasks} />
+                                <InnerList dogs={this.props.dogs} />
                                    {/* { {this.props.tasks.map((task, index) => (<Task key={task.id} task={task} index={index}/>
                                     ))} } */}
                                     {provided.placeholder}
-                                </TaskList>
+                                </DogList>
                             )}
                         </Droppable>
                     </Container>

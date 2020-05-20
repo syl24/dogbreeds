@@ -1,6 +1,7 @@
 import React, { /*useState*/ } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
+import ParticlesBg from "particles-bg";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import initialData from "./intial-data";
 import * as serviceWorker from './serviceWorker';
@@ -13,9 +14,9 @@ const Container = styled.div`
 
 class InnerList extends React.PureComponent {
   render(){
-    const { column, taskMap, index } = this.props;
-    const tasks = column.taskIds.map(taskId => taskMap[taskId]);
-    return <Column column={column} tasks={tasks} index={index} />
+    const { column, dogMap, index } = this.props;
+    const dogs = column.dogIds.map(dogId => dogMap[dogId]);
+    return <Column column={column} dogs={dogs} index={index} />
   }
 }
 
@@ -35,7 +36,7 @@ class App extends React.Component {
     onDragUpdate = update => {
       const { destination } = update;
       const opacity = destination
-      ? destination.index / Object.keys(this.state.tasks).length : 0;
+      ? destination.index / Object.keys(this.state.dogs).length : 0;
       document.body.style.backgroundColor = `rgba(153, 141, 217, ${ opacity })`;
     }
 
@@ -80,13 +81,13 @@ class App extends React.Component {
       const finish = this.state.columns[destination.droppableId];
 
       if(start === finish){
-        const newtaskIds = Array.from(start.taskIds);
-        newtaskIds.splice(source.index, 1);
-        newtaskIds.splice(destination.index, 0, draggableId);
+        const newDogIds = Array.from(start.dogIds);
+        newDogIds.splice(source.index, 1);
+        newDogIds.splice(destination.index, 0, draggableId);
   
         const newColumn = {
           ...start,
-          taskIds: newtaskIds
+          dogIds: newDogIds
         }
   
         const newState = {
@@ -101,18 +102,18 @@ class App extends React.Component {
         return;
       }
       // Moving from list to list
-      const startTaskIds = Array.from(start.taskIds);
-      startTaskIds.splice(source.index, 1);
+      const startDogIds = Array.from(start.dogIds);
+      startDogIds.splice(source.index, 1);
       const newStart = {
         ...start,
-        taskIds: startTaskIds
+        dogIds: startDogIds
       }
 
-      const finishTaskIds = Array.from(finish.taskIds);
-      finishTaskIds.splice(destination.index, 0, draggableId);
+      const finishDogIds = Array.from(finish.dogIds);
+      finishDogIds.splice(destination.index, 0, draggableId);
       const newFinish = {
         ...finish,
-        taskIds: finishTaskIds
+        dogIds: finishDogIds
       }
 
       const newState = {
@@ -134,6 +135,7 @@ class App extends React.Component {
           justifyContent: "center",
           alignItems: "center",
         }}>
+          
         <DragDropContext onDragStart = {this.onDragStart} onDragUpdate = {this.onDragUpdate} onDragEnd = {this.onDragEnd}>
           <Droppable droppableId="all-columns" direction="horizontal" type='column'>
               {(provided) => (
@@ -141,14 +143,16 @@ class App extends React.Component {
                     {
                       this.state.columnOrder.map((columnId, index) => {
                       const column = this.state.columns[columnId];
-                      return <InnerList key={column.id} column={column} taskMap={this.state.tasks} index={index}/>;
+                      return <InnerList key={column.id} column={column} dogMap={this.state.dogs} index={index}/>;
                       })
                     }
                     {provided.placeholder}
+                    <ParticlesBg type="circle" bg={true}/>
                   </Container>
               )}
           </Droppable>
         </DragDropContext>
+        
         </div>
       )       
     }
