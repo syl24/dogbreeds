@@ -8,7 +8,7 @@ A simple demonstration of React Front End project, with randomly generated dogs,
     <img src="image.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">A Stylish Dog Shuffling Web Applicationf</h3>
+  <h3 align="center">A Stylish Dog Shuffling Web Application</h3>
 
 </p>
 
